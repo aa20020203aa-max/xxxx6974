@@ -1,14 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Pinball</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div id="game-container">
+        <div id="ui-container">
+            <h1 id="score">SCORE: 0</h1>
+        </div>
+        <canvas id="pinball-canvas"></canvas>
+        <div id="overlay">
+            <h2 id="overlay-title">HTML5 PINBALL</h2>
+            <p id="overlay-text">Use Left/Right arrow keys to control the flippers.<br>Press SPACE to re-launch the ball.</p>
+            <button id="start-button">START GAME</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
