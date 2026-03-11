@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Engine and Renderer Setup ---
     const engine = Engine.create();
     const world = engine.world;
-    engine.world.gravity.y = 1.2;
+    engine.world.gravity.y = 1;
 
     const render = Render.create({
         canvas: canvas,
@@ -59,7 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Create Game Elements ---
     const ball = Bodies.circle(container.clientWidth - 35, container.clientHeight - 50, 10, {
-        restitution: 0.5, render: { fillStyle: '#00ffff' }, label: 'ball'
+        restitution: 0.4, // Reduced bounciness
+        render: { fillStyle: '#00ffff' }, 
+        label: 'ball'
     });
 
     const flipperGroup = Body.nextGroup(true);
@@ -67,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const leftFlipper = Bodies.rectangle(container.clientWidth * 0.3, container.clientHeight - 120, 80, 15, { label: 'leftFlipper', ...flipperOptions, angle: Math.PI / 6 });
     const rightFlipper = Bodies.rectangle(container.clientWidth * 0.7, container.clientHeight - 120, 80, 15, { label: 'rightFlipper', ...flipperOptions, angle: -Math.PI / 6 });
 
-    const bumperOptions = { isStatic: true, restitution: 1.5, label: 'bumper', render: { fillStyle: '#ffff00' } };
+    const bumperOptions = { isStatic: true, restitution: 1.2, label: 'bumper', render: { fillStyle: '#ffff00' } }; // Slightly reduced bumper restitution
     const bumpers = [
         Bodies.circle(container.clientWidth / 2, 100, 20, bumperOptions),
         Bodies.circle(container.clientWidth * 0.25, 200, 20, bumperOptions),
@@ -75,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Bodies.circle(container.clientWidth / 2, 300, 20, bumperOptions),
     ];
 
-    const wallOptions = { isStatic: true, render: { fillStyle: '#ff00ff' }, restitution: 0.5 };
+    const wallOptions = { isStatic: true, render: { fillStyle: '#ff00ff' }, restitution: 0.2 }; // Reduced wall restitution
     const walls = [
         Bodies.rectangle(container.clientWidth / 2, -10, container.clientWidth, 20, { ...wallOptions }),
         Bodies.rectangle(-10, container.clientHeight / 2, 20, container.clientHeight, { ...wallOptions }),
@@ -111,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const launchBall = () => {
         if (isGameRunning && ball.position.x > container.clientWidth - 50 && ball.velocity.y > -1) {
-            Body.setVelocity(ball, { x: 0, y: -30 }); // Increased velocity for a strong launch
+            Body.setVelocity(ball, { x: 0, y: -25 }); // Adjusted launch velocity
         }
     };
 
@@ -168,12 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetGame() {
         isGameRunning = false; // Set to false before starting
-        // Reset flipper angles
         Body.setAngle(leftFlipper, Math.PI / 6);
         Body.setAngle(rightFlipper, -Math.PI / 6);
-        // Clear ball trail
         trail = [];
-        // Restart the game logic
         startGame();
     }
 
@@ -184,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initial Setup ---
     startButton.addEventListener('click', () => {
-        if (!isGameRunning) { // Prevent multiple starts
+        if (!isGameRunning) {
              resetGame();
         }
     });
@@ -192,5 +191,5 @@ document.addEventListener('DOMContentLoaded', () => {
     showOverlay('HTML5 PINBALL', 'Use Left/Right arrow keys to control flippers.<br>Press SPACE to launch the ball.', 'START GAME');
     scoreElement.innerHTML = "SCORE: 0";
     Body.setStatic(ball, true);
-    Body.setPosition(ball, {x: -100, y: -100}); // Hide ball initially
+    Body.setPosition(ball, {x: -100, y: -100}); 
 });
